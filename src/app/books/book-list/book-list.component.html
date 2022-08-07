@@ -1,15 +1,21 @@
-<div class="row row-cols-1 row-cols-md-2 g-4">
-  <div class="col" *ngFor="let book of bookDataList">
-    <div class="card">
-      <img
-        src="../../../assets/img/{{ book.title }}.jpg"
-        class="card-img-top"
-        alt="{{ book.title }}"
-      />
-      <div class="card-body">
-        <h5 class="card-title">{{ book.title }}</h5>
-        <p class="card-text">{{ book.description }}</p>
+<ng-container *ngIf="(bookDataList$ | async ) as bookList">
+  <div class="row row-cols-1 row-cols-md-2 g-4" *ngIf="bookList.length > 0">
+    <div class="col" *ngFor="let book of bookList">
+      <div class="card mb-5">
+        <!-- <img
+          src="../../../assets/img/{{ book.title }}.jpg"
+          class="card-img-top book-cover"
+          alt="{{ book.title }}"
+        /> -->
+        <div class="card-body">
+          <h5 class="card-title text-truncate">{{ book.title }}</h5>
+          <p class="card-text text-truncate">
+            {{ book.description || "----" }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <app-loader [dataLength]="bookList.length"></app-loader>
+</ng-container>

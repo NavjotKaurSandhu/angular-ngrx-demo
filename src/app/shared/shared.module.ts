@@ -1,12 +1,12 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header.component';
-
-
+import { LoaderComponent } from './loader/loader.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
+    LoaderComponent,
     HeaderComponent
   ],
   imports: [
@@ -14,7 +14,8 @@ import { HeaderComponent } from './header.component';
     RouterModule
   ],
   exports: [
+    LoaderComponent,
     HeaderComponent
   ]
 })
-export class HeaderModule { }
+export class SharedModule { }
