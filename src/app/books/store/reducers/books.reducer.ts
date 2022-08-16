@@ -2,13 +2,13 @@ import * as fromBooks from "../actions/books.action";
 import { Book } from "../../models/book.model";
 
 export interface BookState {
-  data: Book[];
+  entities: { [id: number]: Book };
   loaded: boolean;
   loading: boolean;
 }
 
 export const initialState: BookState = {
-  data: [],
+  entities: {},
   loaded: false,
   loading: false,
 };
@@ -17,7 +17,6 @@ export function reducer(
   state = initialState,
   action?: fromBooks.BookAction
 ): BookState {
-
   switch (action?.type) {
     case fromBooks.LOAD_BOOKS: {
       return {
@@ -26,12 +25,24 @@ export function reducer(
       };
     }
     case fromBooks.LOAD_BOOKS_SUCCESS: {
-      const data = action?.payload
+      const books = action?.payload;
+      const entities = books.reduce(
+        (dataEntities: { [id: number]: Book }, book: Book) => {
+          const bookId: any = book?.id;
+          return {
+            ...dataEntities,
+            [bookId]: book,
+          };
+        },
+        {
+          ...state.entities,
+        }
+      );
       return {
         ...state,
         loaded: true,
         loading: false,
-        data
+        entities,
       };
     }
     case fromBooks.LOAD_BOOKS_FAIL: {
@@ -42,15 +53,14 @@ export function reducer(
       };
     }
     default: {
-        return {
-            ...state,
-            ...initialState
-        }
+      return {
+        ...state,
+        ...initialState,
+      };
     }
   }
 }
 
-
 export const getBooksLoading = (state: BookState) => state.loading;
 export const getBooksLoaded = (state: BookState) => state.loaded;
-export const getBookList = (state: BookState) => state.data;
+export const getBookEntities = (state: BookState) => state.entities;

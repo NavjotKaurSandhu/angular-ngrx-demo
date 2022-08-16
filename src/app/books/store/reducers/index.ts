@@ -35,10 +35,14 @@ export const getBookListState = createSelector(
 );
 
 // data: Array<any>
-export const getAllBooks = createSelector(
+export const getBooksEntities = createSelector(
   getBookListState,
-  fromBooks.getBookList
+  fromBooks.getBookEntities
 );
+
+export const getAllBooks = createSelector(getBooksEntities, (entities) => {
+  return Object.keys(entities).map((id: string) => entities[parseInt(id, 10)]);
+});
 
 // loaded: boolean
 export const getBooksLoaded = createSelector(
