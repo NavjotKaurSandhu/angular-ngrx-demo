@@ -1,1 +1,29 @@
-<p>book works!</p>
+<ng-container *ngIf="book$ | async as bookItem">
+  <div class="card mb-md-3">
+    <div class="card-body">
+      <div class="card-title mb-5 row">
+        <div class="col">
+          <button type="button" class="btn btn-dark" (click)="addNewBook()">
+            Add New
+          </button>
+        </div>
+        <div class="col-2">
+          <button
+            type="button"
+            class="btn btn-link"
+            [routerLink]="['/home/books']"
+            routerLinkActive="router-link-active"
+          >
+            Back to list
+          </button>
+        </div>
+      </div>
+      <h5 class="card-title text-truncate">
+        {{ bookItem.title || "adsdsad" }}
+      </h5>
+      <p class="card-text text-truncate">
+        {{ bookItem.description || "----" }}
+      </p>
+    </div>
+  </div>
+</ng-container>

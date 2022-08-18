@@ -1,8 +1,4 @@
-import {
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-} from "@ngrx/store";
+import { ActionReducerMap, createFeatureSelector } from "@ngrx/store";
 import * as fromBooks from "./books.reducer";
 
 export interface BooksState {
@@ -27,31 +23,3 @@ export const getBooksState = createFeatureSelector<BooksState>("appBooks");
  *  }
  * }
  */
-
-// Book list state ---> Hold selector for books state
-export const getBookListState = createSelector(
-  getBooksState,
-  (state: BooksState) => state.books
-);
-
-// data: Array<any>
-export const getBooksEntities = createSelector(
-  getBookListState,
-  fromBooks.getBookEntities
-);
-
-export const getAllBooks = createSelector(getBooksEntities, (entities) => {
-  return Object.keys(entities).map((id: string) => entities[parseInt(id, 10)]);
-});
-
-// loaded: boolean
-export const getBooksLoaded = createSelector(
-  getBookListState,
-  fromBooks.getBooksLoaded
-);
-
-// loading: boolean
-export const getBooksLoading = createSelector(
-  getBookListState,
-  fromBooks.getBooksLoading
-);

@@ -53,10 +53,7 @@ export function reducer(
       };
     }
     default: {
-      return {
-        ...state,
-        ...initialState,
-      };
+      return state;
     }
   }
 }
